@@ -1,0 +1,41 @@
+# yarn
+# ref: https://yarnpkg.com/getting-started/qa#which-files-should-be-gitignored
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+
+.yarn/cache/
+**/.yarn/install-state.gz
+
+yarn-debug.log*
+yarn-error.log*
+
+# node.js
+node_modules/
+
+# editor settings
+.vscode/
+
+# OSX
+.DS_Store
+
+# ESLint
+.eslintcache
+
+# testing
+coverage/
+
+# typescript
+*.tsbuildinfo
+
+# tmp
+/tmp/*
+!/tmp/.keep
+
+# dotenv
+.env
+.env.*

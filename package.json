@@ -4,5 +4,11 @@
   "private": true,
   "workspaces": [
     "projects/*"
-  ]
+  ],
+  "scripts": {
+    "firebase:deploy": "firebase deploy",
+    "firebase:functions:deploy": "firebase deploy --only functions",
+    "firebase:firestore:deploy": "firebase deploy --only firestore",
+    "firebase:storage:deploy": "firebase deploy --only storage"
+  }
 }

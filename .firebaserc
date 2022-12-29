@@ -1,0 +1,6 @@
+{
+  "projects": {
+    "default": "rn-firebase-bootstrap",
+    "prod": "rn-firebase-bootstrap"
+  }
+}

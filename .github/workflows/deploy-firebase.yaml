@@ -1,0 +1,27 @@
+name: "deploy-firebase"
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  check:
+    runs-on: "ubuntu-20.04"
+    timeout-minutes: 30
+    steps:
+      - name: Set stage name
+        run: echo "STAGE_NAME=${{ github.run_id }}" >> $GITHUB_ENV
+
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "16.18.1"
+          cache: "yarn"
+
+      - run: npm install -g yarn
+      - run: yarn install --immutable
+
+      - name: Run deploy
+        run: yarn run 'deploy:firebase' --token=${{ secrets.FIREBASE_TOKEN }}

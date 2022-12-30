@@ -3,7 +3,7 @@ name: "deploy-firebase"
 on:
   push:
     branches:
-      - release/*
+      - main
 
 env:
   INCOMING_WEBHOOK_URL: ${{ secrets.SLACK_INCOMING_WEBHOOK_URL }}
@@ -58,7 +58,7 @@ jobs:
             ]
 
       - name: Set firebase environment
-        run: firebase use prod --token=${{ secrets.FIREBASE_TOKEN }}
+        run: firebase use default --token=${{ secrets.FIREBASE_TOKEN }}
 
       - name: Run deploy
         run: yarn run 'deploy:firebase' --token=${{ secrets.FIREBASE_TOKEN }}

@@ -5,6 +5,9 @@ on:
     branches:
       - main
 
+env:
+  INCOMING_WEBHOOK_URL: ${{ secrets.SLACK_INCOMING_WEBHOOK_URL }}
+
 jobs:
   check:
     runs-on: "ubuntu-20.04"
@@ -29,8 +32,85 @@ jobs:
       - name: Install dependencies
         run: yarn install --immutable
 
+      - name: Post to Slack on start
+        uses: tokorom/action-slack-incoming-webhook@main
+        with:
+          attachments: |
+            [
+              {
+                "color": "warning",
+                "author_name": "${{ github.actor }}",
+                "author_icon": "${{ github.event.sender.avatar_url }}",
+                "title": "${{ github.workflow }}",
+                "title_link": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}",
+                "text": "デプロイを開始します！",
+                "fields": [
+                  {
+                    "title": "Repository",
+                    "value": "${{ github.repository }}"
+                  },
+                  {
+                    "title": "Commit URL",
+                    "value": "https://github.com/${{ github.repository }}/commit/${{ github.sha }}"
+                  }
+                ]
+              }
+            ]
+
       - name: Set firebase environment
         run: firebase use default --token=${{ secrets.FIREBASE_TOKEN }}
 
       - name: Run deploy
         run: yarn run 'deploy:firebase' --token=${{ secrets.FIREBASE_TOKEN }}
+
+      - name: Post to Slack on success
+        if: success()
+        uses: tokorom/action-slack-incoming-webhook@main
+        with:
+          attachments: |
+            [
+              {
+                "color": "good",
+                "author_name": "${{ github.actor }}",
+                "author_icon": "${{ github.event.sender.avatar_url }}",
+                "title": "${{ github.workflow }}",
+                "title_link": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}",
+                "text": "デプロイが成功しました！",
+                "fields": [
+                  {
+                    "title": "Repository",
+                    "value": "${{ github.repository }}"
+                  },
+                  {
+                    "title": "Commit URL",
+                    "value": "https://github.com/${{ github.repository }}/commit/${{ github.sha }}"
+                  }
+                ]
+              }
+            ]
+
+      - name: Post to Slack on failure
+        if: failure()
+        uses: tokorom/action-slack-incoming-webhook@main
+        with:
+          attachments: |
+            [
+              {
+                "color": "danger",
+                "author_name": "${{ github.actor }}",
+                "author_icon": "${{ github.event.sender.avatar_url }}",
+                "title": "${{ github.workflow }}",
+                "title_link": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}",
+                "text": "デプロイが失敗しました",
+                "fields": [
+                  {
+                    "title": "Repository",
+                    "value": "${{ github.repository }}"
+                  },
+                  {
+                    "title": "Commit URL",
+                    "value": "https://github.com/${{ github.repository }}/commit/${{ github.sha }}"
+                  }
+                ]
+              }
+            ]

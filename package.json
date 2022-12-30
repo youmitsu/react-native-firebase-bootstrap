@@ -8,14 +8,18 @@
   "scripts": {
     "build:app:ios:dev": "yarn workspace app ios",
     "build:app:android:dev": "yarn workspace app android",
-    "check": "yarn workspaces foreach run lint",
-    "check:app": "yarn workspace app lint",
-    "check:functions": "yarn workspace functions lint",
-    "check:firestore": "yarn workspace firestore lint",
     "fix": "yarn workspaces foreach run fix",
     "fix:app": "yarn workspace app fix",
     "fix:functions": "yarn workspace functions fix",
     "fix:firestore": "yarn workspace firestore fix",
+    "lint": "yarn workspaces foreach run lint",
+    "lint:app": "yarn workspace app lint",
+    "lint:functions": "yarn workspace functions lint",
+    "lint:firestore": "yarn workspace firestore lint",
+    "test": "yarn workspaces foreach run test",
+    "test:app": "yarn workspace app test",
+    "test:functions": "yarn workspace functions test",
+    "test:firestore": "yarn workspace firestore test",
     "deploy:firebase": "firebase deploy"
   },
   "devDependencies": {

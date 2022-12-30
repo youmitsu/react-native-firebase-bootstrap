@@ -11,6 +11,8 @@
     "typescript": "^4.7.4"
   },
   "scripts": {
-    "test": "jest --runInBand"
+    "test": "jest --runInBand",
+    "lint": "eslint --max-warnings=0 --fix --ext .js,.ts .",
+    "fix": "yarn lint --fix"
   }
 }

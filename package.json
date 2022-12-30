@@ -6,10 +6,17 @@
     "projects/*"
   ],
   "scripts": {
-    "firebase:deploy": "firebase deploy",
-    "firebase:functions:deploy": "firebase deploy --only functions",
-    "firebase:firestore:deploy": "firebase deploy --only firestore",
-    "firebase:storage:deploy": "firebase deploy --only storage"
+    "build:app:ios:dev": "yarn workspace app ios",
+    "build:app:android:dev": "yarn workspace app android",
+    "check": "yarn workspaces foreach run lint",
+    "check:app": "yarn workspace app lint",
+    "check:functions": "yarn workspace functions lint",
+    "check:firestore": "yarn workspace firestore lint",
+    "fix": "yarn workspaces foreach run fix",
+    "fix:app": "yarn workspace app fix",
+    "fix:functions": "yarn workspace functions fix",
+    "fix:firestore": "yarn workspace firestore fix",
+    "deploy:firebase": "firebase deploy"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.47.1",

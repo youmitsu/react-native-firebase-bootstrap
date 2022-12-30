@@ -29,5 +29,8 @@ jobs:
       - name: Install dependencies
         run: yarn install --immutable
 
+      - name: Set firebase environment
+        run: firebase use default
+
       - name: Run deploy
         run: yarn run 'deploy:firebase' --token=${{ secrets.FIREBASE_TOKEN }}

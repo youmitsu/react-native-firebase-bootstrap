@@ -1,4 +1,4 @@
-name: "deploy-firebase"
+name: "deploy-firebase-dev"
 
 on:
   push:

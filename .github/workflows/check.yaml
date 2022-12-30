@@ -1,0 +1,30 @@
+name: "check"
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths-ignore:
+      - "**.md"
+      - ".github/workflows/**"
+      - "!.github/workflows/check.yml"
+jobs:
+  check:
+    runs-on: "ubuntu-20.04"
+    timeout-minutes: 30
+    steps:
+      - name: Set stage name
+        run: echo "STAGE_NAME=${{ github.run_id }}" >> $GITHUB_ENV
+
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "16.18.1"
+          cache: "yarn"
+
+      - run: npm install -g yarn
+      - run: yarn install --immutable
+
+      - name: Run static checks
+        run: yarn run check

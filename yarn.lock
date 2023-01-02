@@ -4432,6 +4432,7 @@ __metadata:
     react: 18.1.0
     react-native: 0.70.6
     react-test-renderer: 18.1.0
+    rnfb-bootstrap-schema: "workspace:*"
     typescript: 4.0.7
   languageName: unknown
   linkType: soft
@@ -7309,6 +7310,7 @@ __metadata:
     "@types/node": ^18.0.0
     eslint: ^8.9.0
     jest: ^28.1.1
+    rnfb-bootstrap-schema: "workspace:*"
     ts-jest: ^28.0.5
     ts-node: ^10.8.1
     typescript: ^4.7.4

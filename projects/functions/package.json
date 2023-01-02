@@ -1,7 +1,6 @@
 {
   "name": "functions",
   "private": true,
-  "packageManager": "yarn@3.3.1",
   "engines": {
     "node": "16"
   },

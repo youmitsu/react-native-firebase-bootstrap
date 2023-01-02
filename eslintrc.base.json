@@ -56,14 +56,6 @@
     ],
     "import/no-unresolved": ["error"]
   },
-  "overrides": [
-    {
-      "files": ["*.js"],
-      "rules": {
-        "@typescript-eslint/no-var-requires": "off"
-      }
-    }
-  ],
   "settings": {
     "import/resolver": {
       "typescript": {

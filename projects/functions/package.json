@@ -4,7 +4,7 @@
   "engines": {
     "node": "16"
   },
-  "main": "lib/index.js",
+  "main": "lib/projects/functions/src/index.js",
   "scripts": {
     "lint": "eslint --max-warnings=0 --fix --ext .js,.ts .",
     "fix": "yarn lint --fix",

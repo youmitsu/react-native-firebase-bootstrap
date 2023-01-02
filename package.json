@@ -8,6 +8,7 @@
   "scripts": {
     "build:app:ios:dev": "yarn workspace app ios",
     "build:app:android:dev": "yarn workspace app android",
+    "build:schema": "yarn workspace rnfb-bootstrap-schema build",
     "fix": "yarn workspaces foreach run fix",
     "fix:app": "yarn workspace app fix",
     "fix:functions": "yarn workspace functions fix",

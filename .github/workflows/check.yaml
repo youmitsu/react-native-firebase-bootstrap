@@ -29,6 +29,9 @@ jobs:
       - run: npm install -g yarn
       - run: yarn install --immutable
 
+      - name: Build schema
+        run: yarn run build:schema
+
       - name: Run lint
         run: yarn run lint
 

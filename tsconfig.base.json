@@ -16,7 +16,8 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "skipLibCheck": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "composite": true
   },
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "dist/**/*"]
 }

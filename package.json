@@ -12,14 +12,17 @@
     "fix:app": "yarn workspace app fix",
     "fix:functions": "yarn workspace functions fix",
     "fix:firestore": "yarn workspace firestore fix",
+    "fix:schema": "yarn workspace rnfb-bootstrap-schema fix",
     "lint": "yarn workspaces foreach run lint",
     "lint:app": "yarn workspace app lint",
     "lint:functions": "yarn workspace functions lint",
     "lint:firestore": "yarn workspace firestore lint",
+    "lint:schema": "yarn workspace rnfb-bootstrap-schema lint",
     "test": "yarn workspaces foreach run test",
     "test:app": "yarn workspace app test",
     "test:functions": "yarn workspace functions test",
     "test:firestore": "yarn workspace firestore test",
+    "test:schema": "yarn workspace rnfb-bootstrap-schema test",
     "deploy:firebase": "firebase deploy"
   },
   "devDependencies": {
@@ -30,5 +33,9 @@
     "eslint-plugin-import": "^2.26.0",
     "husky": "^8.0.2",
     "typescript": "^4.7.4"
+  },
+  "dependencies": {
+    "firebase": "^9.15.0",
+    "zod": "^3.20.2"
   }
 }

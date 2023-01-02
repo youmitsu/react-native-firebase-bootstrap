@@ -1,9 +1,22 @@
 {
   "compilerOptions": {
     "strict": true,
-    "skipLibCheck": true,
     "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true
+    "pretty": true,
+    "allowSyntheticDefaultImports": true,
+    "allowUnusedLabels": false,
+    "allowUnreachableCode": false,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "allowJs": true,
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "sourceMap": true,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "skipLibCheck": true,
+    "resolveJsonModule": true
   },
   "exclude": ["node_modules"]
 }

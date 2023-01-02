@@ -1,0 +1,6 @@
+{
+  "extends": ["../../eslintrc.base.json"],
+  "ignorePatterns": [
+    "**/jest.config.js"
+  ]
+}

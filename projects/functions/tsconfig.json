@@ -6,13 +6,10 @@
     "outDir": "lib",
     "lib": ["es2020"],
     "baseUrl": ".",
-    "paths": {
-      "@/*": ["./src/*"],
-      "@common/*": ["../../common/*"],
-    }
   },
   "exclude": ["node_modules", "lib"],
   "include": [
-    "./src"
+    "./src",
+    "../../common"
   ]
 }

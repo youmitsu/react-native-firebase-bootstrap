@@ -7,3 +7,4 @@ import * as handlers from "./handlers";
 admin.initializeApp();
 
 exports.hello = handlers.hello;
+exports.echo = handlers.echo;

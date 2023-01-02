@@ -55,16 +55,5 @@
       }
     ],
     "import/no-unresolved": ["error"]
-  },
-  "settings": {
-    "import/resolver": {
-      "typescript": {
-        "project": "./projects/*/tsconfig.json"
-      },
-      "node": {
-        "extensions": [".js", ".jsx", ".ts", ".tsx"],
-        "moduleDirectory": ["node_modules"]
-      }
-    }
   }
 }

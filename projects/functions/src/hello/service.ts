@@ -1,15 +1,14 @@
 import { firestore } from "firebase-admin";
 
-import type { User } from "@common/firestore/schema";
-
+import * as FirestoreType from "../../../../common/firestore";
+import { userConverter } from "../utils/converter";
 
 export const service = async (): Promise<boolean> => {
-  const user: User = {
-    name: "bobby",
-  };
-  console.log("hello world", user);
-
-  const snapshot = await firestore().collection("users").doc("hoge").get();
+  const snapshot = await firestore()
+    .collection("users")
+    .withConverter<FirestoreType.User.Schema>(userConverter)
+    .doc("hoge")
+    .get();
   const data = snapshot.data();
   console.log("data exists", snapshot.exists);
   if (data !== undefined) {

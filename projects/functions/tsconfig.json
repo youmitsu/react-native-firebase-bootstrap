@@ -8,6 +8,7 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
+      "@common/*": ["../../common/*"],
     }
   },
   "exclude": ["node_modules", "lib"],

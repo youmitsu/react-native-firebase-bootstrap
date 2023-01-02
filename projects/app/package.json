@@ -1,7 +1,6 @@
 {
   "name": "app",
   "version": "0.0.1",
-  "private": true,
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
@@ -29,7 +28,6 @@
     "jest": "^26.6.3",
     "metro-react-native-babel-preset": "0.72.3",
     "react-test-renderer": "18.1.0",
-    "rnfb-bootstrap-schema": "workspace:*",
     "typescript": "4.0.7"
   },
   "jest": {

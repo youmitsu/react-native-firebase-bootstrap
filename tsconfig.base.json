@@ -9,15 +9,16 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitReturns": true,
-    "allowJs": true,
-    "declaration": true,
-    "emitDeclarationOnly": true,
+    // "allowJs": true,
+    // "declaration": true,
+    // "emitDeclarationOnly": true,
     "sourceMap": true,
-    "module": "commonjs",
-    "moduleResolution": "node",
+    // "module": "commonjs",
+    // "moduleResolution": "node",
     "skipLibCheck": true,
     "resolveJsonModule": true,
-    "composite": true
+    // "composite": true
   },
-  "exclude": ["node_modules", "dist/**/*"]
+  "exclude": ["node_modules", "projects/**/dist/**"],
+  "references": []
 }

@@ -1,5 +1,6 @@
 {
   "name": "react-native-firebase-bootstrap",
+  "version": "1.0.0",
   "packageManager": "yarn@3.3.1",
   "private": true,
   "workspaces": [
@@ -8,22 +9,18 @@
   "scripts": {
     "build:app:ios:dev": "yarn workspace app ios",
     "build:app:android:dev": "yarn workspace app android",
-    "build:schema": "yarn workspace rnfb-bootstrap-schema build",
     "fix": "yarn workspaces foreach run fix",
     "fix:app": "yarn workspace app fix",
     "fix:functions": "yarn workspace functions fix",
     "fix:firestore": "yarn workspace firestore fix",
-    "fix:schema": "yarn workspace rnfb-bootstrap-schema fix",
     "lint": "yarn workspaces foreach run lint",
     "lint:app": "yarn workspace app lint",
     "lint:functions": "yarn workspace functions lint",
     "lint:firestore": "yarn workspace firestore lint",
-    "lint:schema": "yarn workspace rnfb-bootstrap-schema lint",
     "test": "yarn workspaces foreach run test",
     "test:app": "yarn workspace app test",
     "test:functions": "yarn workspace functions test",
     "test:firestore": "yarn workspace firestore test",
-    "test:schema": "yarn workspace rnfb-bootstrap-schema test",
     "deploy:firebase": "firebase deploy"
   },
   "devDependencies": {

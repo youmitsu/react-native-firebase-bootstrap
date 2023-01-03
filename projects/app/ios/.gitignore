@@ -15,3 +15,5 @@ builds/*
 *.xcarchive
 
 **/appstore_key.p8
+**/app.ipa
+**/app.app.dSYM.zip

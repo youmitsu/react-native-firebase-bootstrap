@@ -532,7 +532,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.holly.reactnativebootstrap;
 				PRODUCT_NAME = ReactNativeFirebaseBootstrapApp;
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = ReactNativeFirebaseBootstrap;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match AppStore com.holly.reactnativebootstrap";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};

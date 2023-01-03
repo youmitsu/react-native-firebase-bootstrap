@@ -21,6 +21,10 @@ jobs:
       - run: npm install -g yarn
       - run: yarn install --immutable
 
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: .ruby-version
+
       - name: Show Xcode version
         run: xcodebuild -version
 

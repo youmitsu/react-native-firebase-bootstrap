@@ -18,6 +18,9 @@ default_platform(:ios)
 platform :ios do
   desc "Build and Upload TestFlight"
   lane :appstore do
+    # workaround: https://zenn.dev/himara2/articles/6a46c977567615#fastlane%E3%81%AB%E3%83%86%E3%82%B9%E3%83%88%E3%83%95%E3%83%A9%E3%82%A4%E3%83%88%E3%81%AE%E3%81%9F%E3%82%81%E3%81%AE%E3%83%AC%E3%83%BC%E3%83%B3%E3%82%92%E5%AE%9F%E8%A3%85%E3%81%99%E3%82%8B
+    setup_ci(provider: "travis")
+
     api_key = app_store_connect_api_key(
       key_id: "DMSP28L983",
       issuer_id: "4e287f85-c492-4715-9c45-8f8ec50b6e52",

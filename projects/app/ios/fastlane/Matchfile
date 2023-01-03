@@ -2,7 +2,7 @@ git_url("https://github.com/youmitsu/certificates.git")
 
 storage_mode("git")
 
-type("development") # The default type, can be: appstore, adhoc, enterprise or development
+type("appstore") # The default type, can be: appstore, adhoc, enterprise or development
 
 app_identifier("com.holly.reactnativebootstrap")
 username("holly.app.dev@gmail.com") # Your Apple Developer Portal username

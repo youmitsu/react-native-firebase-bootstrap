@@ -1,12 +1,20 @@
 # react-native-firebase-bootstrap
 
-## setup (when project created)
-
-### 1. set GitHubActions secrets
+## required GitHubActions secrets
 
 - Set firebase token as `FIREBASE_TOKEN`
   - You can get this with `firebase login:ci` command.
 - Set slack incoming webhook url as `SLACK_INCOMING_WEBHOOK_URL`
+- Set github username as `USERNAME`
+  - https://github.com/{yourname}
+- Set AppStoreConnect key as `ASC_KEY_CONTENT`
+  - TODO: how to get this
+- Set fastlane match password as `MATCH_PASSWORD`
+  - You can get it when fastlane match setup
+- Set your github access token as `PERSONAL_GITHUB_ACCESS_TOKEN`
+  - You can get [here](https://github.com/settings/tokens?type=beta)
+
+## setup (when project created)
 
 ### 2. iOS setup
 
@@ -47,9 +55,13 @@ bundle exec fastlane match appstore
 
 TBD
 
-## usage
+## development
 
-### app start in locally
+### common schema
+
+TBD
+
+### app start
 
 ```console
 yarn
@@ -59,3 +71,11 @@ pod install
 yarn start:app:ios:dev # ios
 yarn start:app:android:dev # android
 ```
+
+### firebase functions
+
+TBD
+
+### firebase deploy
+
+TBD

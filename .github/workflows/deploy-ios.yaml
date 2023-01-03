@@ -30,7 +30,7 @@ jobs:
 
       - name: Bundle install
         run: bundle install
-        working-directory: projects/app
+        working-directory: projects/app/ios
 
       - uses: actions/cache@v2
         with:

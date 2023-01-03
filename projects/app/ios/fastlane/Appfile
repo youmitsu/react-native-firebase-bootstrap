@@ -1,0 +1,8 @@
+app_identifier("com.holly.reactnativebootstrap") # The bundle identifier of your app
+apple_id("holly.app.dev@gmail.com") # Your Apple Developer Portal username
+
+itc_team_id("125935570") # App Store Connect Team ID
+team_id("WY86H45JL3") # Developer Portal Team ID
+
+# For more information about the Appfile, see:
+#     https://docs.fastlane.tools/advanced/#appfile

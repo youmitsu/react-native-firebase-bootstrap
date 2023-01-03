@@ -2,9 +2,8 @@ name: Deploy to TestFlight
 
 on:
   push:
-    branches:
-      - main
-      - fix/*
+    tags:
+      - 'v*'
 
 jobs:
   build:

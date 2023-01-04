@@ -49,8 +49,6 @@ cd projects/app/ios
 bundle exec fastlane match appstore
 ```
 
-#### 2.3. set AppIcon
-
 #### 3. Android setup
 
 TBD
@@ -59,7 +57,29 @@ TBD
 
 ### common schema
 
-TBD
+You can use common firestore schema across app and functions.
+
+[schema](./common/firestore)
+
+**example（functions）**
+
+```
+import * as FirestoreType from "../../../../common/firestore";
+import { userConverter } from "../utils/converter";
+
+export const service = async () => {
+  const snapshot = await firestore()
+    .collection("users")
+    .withConverter<FirestoreType.User.Schema>(userConverter)
+    .doc("hoge")
+    .get();
+  const data = snapshot.data();
+  if (data !== undefined) {
+    // This data is validated and typed by User schema.
+    console.log("name", data.name);
+  }
+}
+```
 
 ### app start
 
@@ -74,8 +94,32 @@ yarn start:app:android:dev # android
 
 ### firebase functions
 
-TBD
+```console
+yarn fix:functions # eslint --fix
+yarn lint:functions # eslint
+yarn test:functions # unit testing
+```
 
 ### firebase deploy
 
-TBD
+```console
+yarn deploy:firebase
+```
+
+## preset CI workflow
+
+### PR to `main` branch
+
+- eslint fix, check
+- unit testing（jest）
+
+### branch pushed on `main`
+
+- deploy firebase to dev environment
+- eslint fix, check
+- unit testing（jest）
+
+### `v*` tags pushed
+
+- deploy firebase to prod environment
+- deploy app to TestFlight

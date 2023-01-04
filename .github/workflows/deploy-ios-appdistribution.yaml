@@ -1,21 +1,18 @@
-name: "deploy-firebase"
+name: Deploy to TestFlight
 
 on:
   push:
-    tags:
-      - 'v*'
+    branches:
+      - main
 
 env:
   INCOMING_WEBHOOK_URL: ${{ secrets.SLACK_INCOMING_WEBHOOK_URL }}
 
 jobs:
-  check:
-    runs-on: "ubuntu-20.04"
-    timeout-minutes: 30
-    steps:
-      - name: Set stage name
-        run: echo "STAGE_NAME=${{ github.run_id }}" >> $GITHUB_ENV
+  build:
+    runs-on: macos-latest
 
+    steps:
       - uses: actions/checkout@v2
 
       - uses: actions/setup-node@v2
@@ -23,14 +20,38 @@ jobs:
           node-version: "16.18.1"
           cache: "yarn"
 
-      - name: Install yarn
-        run: npm install -g yarn
+      - run: npm install -g yarn
 
       - name: Install firebase-tools
         run: npm install -g firebase-tools
 
-      - name: Install dependencies
-        run: yarn install --immutable
+      - run: yarn install --immutable
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: .ruby-version
+
+      - name: Show Xcode version
+        run: xcodebuild -version
+
+      - name: Bundle install
+        run: bundle install
+        working-directory: projects/app/ios
+
+      - uses: actions/cache@v2
+        with:
+          path: Pods
+          key: ${{ runner.os }}-pods-${{ hashFiles('**/Podfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-pods-
+
+      - name: Pod Install
+        if: steps.cache-cocoapods.outputs.cache-hit != 'true'
+        run: pod install
+        working-directory: projects/app/ios
+
+      - name: Set firebase environment
+        run: firebase use default --token=${{ secrets.FIREBASE_TOKEN }}
 
       - name: Post to Slack on start
         uses: tokorom/action-slack-incoming-webhook@main
@@ -43,7 +64,7 @@ jobs:
                 "author_icon": "${{ github.event.sender.avatar_url }}",
                 "title": "${{ github.workflow }}",
                 "title_link": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}",
-                "text": "デプロイを開始します！",
+                "text": "appのFirebaseAppDistributionへのデプロイを開始します！",
                 "fields": [
                   {
                     "title": "Repository",
@@ -57,11 +78,16 @@ jobs:
               }
             ]
 
-      - name: Set firebase environment
-        run: firebase use prod --token=${{ secrets.FIREBASE_TOKEN }}
-
-      - name: Run deploy
-        run: yarn run 'deploy:firebase' --token=${{ secrets.FIREBASE_TOKEN }}
+      - name: Upload a new build to Firebase App Distribution
+        env:
+          ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+          ASC_KEY_CONTENT: ${{ secrets.ASC_KEY_CONTENT }}
+          ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+          PERSONAL_GITHUB_ACCESS_TOKEN: ${{ secrets.PERSONAL_GITHUB_ACCESS_TOKEN }}
+          USERNAME: ${{ secrets.USERNAME }}
+        run: bundle exec fastlane appdistribution
+        working-directory: projects/app/ios
 
       - name: Post to Slack on success
         if: success()
@@ -75,7 +101,7 @@ jobs:
                 "author_icon": "${{ github.event.sender.avatar_url }}",
                 "title": "${{ github.workflow }}",
                 "title_link": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}",
-                "text": "デプロイが成功しました！",
+                "text": "appのFirebaseAppDistributionへのデプロイが成功しました！",
                 "fields": [
                   {
                     "title": "Repository",
@@ -101,7 +127,7 @@ jobs:
                 "author_icon": "${{ github.event.sender.avatar_url }}",
                 "title": "${{ github.workflow }}",
                 "title_link": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}",
-                "text": "デプロイが失敗しました",
+                "text": "appのFirebaseAppDistributionへのデプロイが失敗しました",
                 "fields": [
                   {
                     "title": "Repository",

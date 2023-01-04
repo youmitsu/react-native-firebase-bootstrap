@@ -61,4 +61,50 @@ platform :ios do
       skip_waiting_for_build_processing: true
     )
   end
+
+  desc "Build and Upload AppDistribution"
+  lane :appdistribution do
+    # workaround: https://zenn.dev/himara2/articles/6a46c977567615#fastlane%E3%81%AB%E3%83%86%E3%82%B9%E3%83%88%E3%83%95%E3%83%A9%E3%82%A4%E3%83%88%E3%81%AE%E3%81%9F%E3%82%81%E3%81%AE%E3%83%AC%E3%83%BC%E3%83%B3%E3%82%92%E5%AE%9F%E8%A3%85%E3%81%99%E3%82%8B
+    setup_ci(provider: "travis")
+
+    api_key = app_store_connect_api_key(
+      key_id: ENV['ASC_KEY_ID'],
+      issuer_id: ENV['ASC_ISSUER_ID'],
+      key_content: ENV['ASC_KEY_CONTENT'],
+      duration: 1200, # optional (maximum 1200)
+      in_house: false # optional but may be required if using match/sigh
+    )
+
+    username = ENV["USERNAME"]
+    personal_github_access_token = ENV["PERSONAL_GITHUB_ACCESS_TOKEN"]
+    authorization_token_str = "#{username}:#{personal_github_access_token}"
+    basic_authorization_token = Base64.strict_encode64(authorization_token_str)
+
+    # setup certificates for signing
+    match(
+      git_basic_authorization: basic_authorization_token,
+      api_key: api_key,
+      app_identifier: 'com.holly.reactnativebootstrap',
+      type: "adhoc",
+      readonly: is_ci
+    )
+
+    # increment version
+    increment_build_number()
+
+    # build app
+    gym(
+      clean: true,
+      scheme: "ReactNativeFirebaseBootstrapApp",
+      configuration: "Release",
+      output_name: "app.ipa"
+    )
+
+    # distribute to appdistribution
+    firebase_app_distribution(
+      app: "1:426642084284:ios:5d40e384654b39b7b75bb9",
+      release_notes: "",
+      groups: "tester"
+    )
+  end
 end

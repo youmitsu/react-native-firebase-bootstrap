@@ -1,0 +1,64 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:ios)
+
+platform :ios do
+  desc "Build and Upload TestFlight"
+  lane :appstore do
+    # workaround: https://zenn.dev/himara2/articles/6a46c977567615#fastlane%E3%81%AB%E3%83%86%E3%82%B9%E3%83%88%E3%83%95%E3%83%A9%E3%82%A4%E3%83%88%E3%81%AE%E3%81%9F%E3%82%81%E3%81%AE%E3%83%AC%E3%83%BC%E3%83%B3%E3%82%92%E5%AE%9F%E8%A3%85%E3%81%99%E3%82%8B
+    setup_ci(provider: "travis")
+
+    api_key = app_store_connect_api_key(
+      key_id: "DMSP28L983",
+      issuer_id: "4e287f85-c492-4715-9c45-8f8ec50b6e52",
+      key_content: ENV['ASC_KEY_CONTENT'],
+      duration: 1200, # optional (maximum 1200)
+      in_house: false # optional but may be required if using match/sigh
+    )
+
+    username = ENV["USERNAME"]
+    personal_github_access_token = ENV["PERSONAL_GITHUB_ACCESS_TOKEN"]
+    authorization_token_str = "#{username}:#{personal_github_access_token}"
+    basic_authorization_token = Base64.strict_encode64(authorization_token_str)
+
+    # setup certificates for signing
+    match(
+      git_basic_authorization: basic_authorization_token,
+      api_key: api_key,
+      app_identifier: 'com.holly.reactnativebootstrap',
+      type: "appstore",
+      readonly: is_ci
+    )
+
+    # increment version
+    increment_build_number()
+
+    # build app
+    gym(
+      clean: true,
+      scheme: "ReactNativeFirebaseBootstrapApp",
+      configuration: "Release",
+      output_name: "app.ipa"
+    )
+
+    # distribute to testflight
+    pilot(
+      api_key: api_key,
+      ipa: "./app.ipa",
+      skip_waiting_for_build_processing: true
+    )
+  end
+end

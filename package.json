@@ -7,8 +7,8 @@
     "projects/*"
   ],
   "scripts": {
-    "build:app:ios:dev": "yarn workspace app ios",
-    "build:app:android:dev": "yarn workspace app android",
+    "start:app:ios:dev": "yarn workspace app ios",
+    "start:app:android:dev": "yarn workspace app android",
     "fix": "yarn workspaces foreach run fix",
     "fix:app": "yarn workspace app fix",
     "fix:functions": "yarn workspace functions fix",

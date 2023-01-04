@@ -1,4 +1,4 @@
-name: Deploy to AppDistribution
+name: deploy-ios-appdistribution
 
 on:
   push:

@@ -49,6 +49,7 @@ platform :ios do
     # build app
     gym(
       clean: true,
+      export_method: "app-store",
       scheme: "ReactNativeFirebaseBootstrapApp",
       configuration: "Release",
       output_name: "app.ipa"
@@ -95,9 +96,16 @@ platform :ios do
     # build app
     gym(
       clean: true,
+      export_method: "ad-hoc",
+      export_options: {
+        provisioningProfiles: {
+          "com.holly.reactnativebootstrap" => "match AdHoc com.holly.reactnativebootstrap",
+        }
+      }
       scheme: "ReactNativeFirebaseBootstrapApp",
       configuration: "Release",
-      output_name: "app.ipa"
+      output_name: "app.ipa",
+      xcargs: "-allowProvisioningUpdates"
     )
 
     # distribute to appdistribution

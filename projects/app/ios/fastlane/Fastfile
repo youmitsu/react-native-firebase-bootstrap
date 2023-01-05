@@ -50,6 +50,11 @@ platform :ios do
     gym(
       clean: true,
       export_method: "app-store",
+      export_options: {
+        provisioningProfiles: {
+          "com.holly.reactnativebootstrap" => "match AppStore com.holly.reactnativebootstrap"
+        }
+      },
       scheme: "ReactNativeFirebaseBootstrapApp",
       configuration: "Release",
       output_name: "app.ipa"
@@ -104,9 +109,8 @@ platform :ios do
         }
       },
       scheme: "ReactNativeFirebaseBootstrapApp",
-      configuration: "Release",
-      output_name: "app.ipa",
-      xcargs: "-allowProvisioningUpdates"
+      configuration: "Staging",
+      output_name: "app.ipa"
     )
 
     # distribute to appdistribution

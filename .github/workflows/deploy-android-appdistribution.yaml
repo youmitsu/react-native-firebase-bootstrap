@@ -27,6 +27,11 @@ jobs:
 
       - run: yarn install --immutable
 
+      - name: Set up JDK
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11.0.4
+
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: .ruby-version

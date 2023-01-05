@@ -50,9 +50,6 @@ jobs:
         run: pod install
         working-directory: projects/app/ios
 
-      - name: Set firebase environment
-        run: firebase use default --token=${{ secrets.FIREBASE_TOKEN }}
-
       - name: Post to Slack on start
         uses: tokorom/action-slack-incoming-webhook@main
         with:

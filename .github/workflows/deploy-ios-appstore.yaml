@@ -36,7 +36,7 @@ jobs:
 
       - uses: actions/cache@v2
         with:
-          path: Pods
+          path: projects/app/ios/Pods
           key: ${{ runner.os }}-pods-${{ hashFiles('**/Podfile.lock') }}
           restore-keys: |
             ${{ runner.os }}-pods-
@@ -45,6 +45,31 @@ jobs:
         if: steps.cache-cocoapods.outputs.cache-hit != 'true'
         run: pod install
         working-directory: projects/app/ios
+
+      - name: Post to Slack on start
+        uses: tokorom/action-slack-incoming-webhook@main
+        with:
+          attachments: |
+            [
+              {
+                "color": "warning",
+                "author_name": "${{ github.actor }}",
+                "author_icon": "${{ github.event.sender.avatar_url }}",
+                "title": "${{ github.workflow }}",
+                "title_link": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}",
+                "text": "appのAppStoreへのデプロイを開始します！",
+                "fields": [
+                  {
+                    "title": "Repository",
+                    "value": "${{ github.repository }}"
+                  },
+                  {
+                    "title": "Commit URL",
+                    "value": "https://github.com/${{ github.repository }}/commit/${{ github.sha }}"
+                  }
+                ]
+              }
+            ]
 
       - name: Upload a new build to App Store Connect
         env:
@@ -56,3 +81,55 @@ jobs:
           USERNAME: ${{ secrets.USERNAME }}
         run: bundle exec fastlane appstore
         working-directory: projects/app/ios
+
+      - name: Post to Slack on success
+        if: success()
+        uses: tokorom/action-slack-incoming-webhook@main
+        with:
+          attachments: |
+            [
+              {
+                "color": "good",
+                "author_name": "${{ github.actor }}",
+                "author_icon": "${{ github.event.sender.avatar_url }}",
+                "title": "${{ github.workflow }}",
+                "title_link": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}",
+                "text": "appのAppStoreへのデプロイが成功しました！",
+                "fields": [
+                  {
+                    "title": "Repository",
+                    "value": "${{ github.repository }}"
+                  },
+                  {
+                    "title": "Commit URL",
+                    "value": "https://github.com/${{ github.repository }}/commit/${{ github.sha }}"
+                  }
+                ]
+              }
+            ]
+
+      - name: Post to Slack on failure
+        if: failure()
+        uses: tokorom/action-slack-incoming-webhook@main
+        with:
+          attachments: |
+            [
+              {
+                "color": "danger",
+                "author_name": "${{ github.actor }}",
+                "author_icon": "${{ github.event.sender.avatar_url }}",
+                "title": "${{ github.workflow }}",
+                "title_link": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}",
+                "text": "appのAppStoreへのデプロイが失敗しました",
+                "fields": [
+                  {
+                    "title": "Repository",
+                    "value": "${{ github.repository }}"
+                  },
+                  {
+                    "title": "Commit URL",
+                    "value": "https://github.com/${{ github.repository }}/commit/${{ github.sha }}"
+                  }
+                ]
+              }
+            ]

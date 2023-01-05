@@ -1,4 +1,4 @@
-name: deploy-ios-appdistribution
+name: deploy-android-appdistribution
 
 on:
   push:
@@ -10,7 +10,7 @@ env:
 
 jobs:
   build:
-    runs-on: macos-latest
+    runs-on: ubuntu-18.04
 
     steps:
       - uses: actions/checkout@v2

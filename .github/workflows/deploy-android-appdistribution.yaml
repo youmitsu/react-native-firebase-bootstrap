@@ -31,24 +31,9 @@ jobs:
         with:
           ruby-version: .ruby-version
 
-      - name: Show Xcode version
-        run: xcodebuild -version
-
       - name: Bundle install
         run: bundle install
-        working-directory: projects/app/ios
-
-      - uses: actions/cache@v2
-        with:
-          path: projects/app/ios/Pods
-          key: ${{ runner.os }}-pods-${{ hashFiles('**/Podfile.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-pods-
-
-      - name: Pod Install
-        if: steps.cache-cocoapods.outputs.cache-hit != 'true'
-        run: pod install
-        working-directory: projects/app/ios
+        working-directory: projects/app/android
 
       - name: Post to Slack on start
         uses: tokorom/action-slack-incoming-webhook@main
@@ -61,7 +46,7 @@ jobs:
                 "author_icon": "${{ github.event.sender.avatar_url }}",
                 "title": "${{ github.workflow }}",
                 "title_link": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}",
-                "text": "iOSのFirebaseAppDistributionへのデプロイを開始します！",
+                "text": "androidのFirebaseAppDistributionへのデプロイを開始します！",
                 "fields": [
                   {
                     "title": "Repository",
@@ -75,17 +60,17 @@ jobs:
               }
             ]
 
+      - name: Restore keystore file
+        run: echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > projects/app/android/app/release.keystore
+
       - name: Upload a new build to Firebase App Distribution
         env:
-          ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
-          ASC_KEY_CONTENT: ${{ secrets.ASC_KEY_CONTENT }}
-          ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
-          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
-          PERSONAL_GITHUB_ACCESS_TOKEN: ${{ secrets.PERSONAL_GITHUB_ACCESS_TOKEN }}
-          USERNAME: ${{ secrets.USERNAME }}
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
         run: bundle exec fastlane appdistribution
-        working-directory: projects/app/ios
+        working-directory: projects/app/android
 
       - name: Post to Slack on success
         if: success()
@@ -99,7 +84,7 @@ jobs:
                 "author_icon": "${{ github.event.sender.avatar_url }}",
                 "title": "${{ github.workflow }}",
                 "title_link": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}",
-                "text": "iOSのFirebaseAppDistributionへのデプロイが成功しました！",
+                "text": "androidのFirebaseAppDistributionへのデプロイが成功しました！",
                 "fields": [
                   {
                     "title": "Repository",
@@ -125,7 +110,7 @@ jobs:
                 "author_icon": "${{ github.event.sender.avatar_url }}",
                 "title": "${{ github.workflow }}",
                 "title_link": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}",
-                "text": "iOSのFirebaseAppDistributionへのデプロイが失敗しました",
+                "text": "androidのFirebaseAppDistributionへのデプロイが失敗しました",
                 "fields": [
                   {
                     "title": "Repository",

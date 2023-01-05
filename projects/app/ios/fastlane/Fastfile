@@ -80,6 +80,7 @@ platform :ios do
     personal_github_access_token = ENV["PERSONAL_GITHUB_ACCESS_TOKEN"]
     authorization_token_str = "#{username}:#{personal_github_access_token}"
     basic_authorization_token = Base64.strict_encode64(authorization_token_str)
+    firebase_token = ENV["FIREBASE_TOKEN"]
 
     # setup certificates for signing
     match(
@@ -112,7 +113,8 @@ platform :ios do
     firebase_app_distribution(
       app: "1:426642084284:ios:5d40e384654b39b7b75bb9",
       release_notes: "",
-      groups: "tester"
+      groups: "tester",
+      firebase_cli_token: firebase_token,
     )
   end
 end
